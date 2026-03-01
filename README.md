@@ -1,11 +1,10 @@
-# SkyBuild-AutoNode-WinFlow
-Automating Windows Server Lifecycle with Jira Service Management &amp; Assets.
-# SkyBuild: AutoNode WinFlow
-![Header](docs/images/your-header-image.png)
+<p align="center">
+  <img src="docs/images/skybuild-logo.png" width="600" alt="SkyBuild Logo">
+</p>
 
+#  SkyBuild: AutoNode WinFlow
 ### **Self-Service Windows Infrastructure, Governed by Jira.**
 *An Innovation by **Sai Sravan Cherukuri***
-
 ---
 
 ## Overview
