@@ -17,7 +17,8 @@
 
 SkyBuild is an open-source framework that turns **Jira Service Management** into a powerful infrastructure orchestration engine. It bridges the gap between enterprise governance and automated Windows deployment.
 
-[ Documentation Site](https://saisravan909.github.io/SkyBuild-AutoNode-WinFlow/) | [ Quick Start](#-quick-start-5-minutes) | [ Security](docs/SECURITY.md)
+* [ Getting Started Guide](./docs/GETTING_STARTED.md)
+* [ Security Policy](./docs/SECURITY.md)[ Security](docs/SECURITY.md)
 
 ##  Overview
 **SkyBuild** is an open-source framework designed to transform **Jira Service Management (JSM)** into a high-velocity provisioning engine. By treating Jira as the control plane, IT teams can automate the end-to-end lifecycle of Windows Server Virtual Machines while maintaining 100% visibility through **Jira Assets**.
