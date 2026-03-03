@@ -1,0 +1,5 @@
+Hostname,CPU,RAM,Status,ImageName,Version
+WIN-SRV-2022-01,4,16,Active,Windows Server 2022,21H2
+WIN-SRV-2019-02,2,8,Provisioning,Windows Server 2019,1809
+SQL-DB-PROD-01,8,32,Requested,Windows Server 2022,21H2
+WEB-APP-TEST-05,2,4,Retired,Windows Server 2016,1607
