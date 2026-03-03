@@ -1,0 +1,26 @@
+{
+  "objectSchema": {
+    "name": "SkyBuild Infrastructure",
+    "description": "CMDB for automated Windows Server provisioning via WinFlow.",
+    "objectTypes": [
+      {
+        "name": "Virtual Machine",
+        "attributes": [
+          { "name": "Hostname", "type": "Text", "description": "Unique network identifier" },
+          { "name": "CPU", "type": "Integer", "description": "Number of vCPUs" },
+          { "name": "RAM", "type": "Integer", "description": "Memory in GB" },
+          { "name": "Status", "type": "Select", "options": ["Requested", "Provisioning", "Active", "Retired"] },
+          { "name": "OS_Ref", "type": "ObjectReference", "target": "OS Image" }
+        ]
+      },
+      {
+        "name": "OS Image",
+        "attributes": [
+          { "name": "ImageName", "type": "Text", "description": "e.g., Windows Server 2022" },
+          { "name": "Version", "type": "Text", "description": "Build number or SKU" },
+          { "name": "Path", "type": "Text", "description": "VHDX or ISO storage path" }
+        ]
+      }
+    ]
+  }
+}
