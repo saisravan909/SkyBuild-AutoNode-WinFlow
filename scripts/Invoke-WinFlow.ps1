@@ -36,7 +36,7 @@ process {
         $TicketKey  = $Data.issue_key
 
         Write-Host "----------------------------------------------------" -ForegroundColor Cyan
-        Write-Host "🚀 SKYBUILD ENGINE ACTIVATED" -ForegroundColor Cyan
+        Write-Host " SKYBUILD ENGINE ACTIVATED" -ForegroundColor Cyan
         Write-Host "Request Source: $TicketKey"
         Write-Host "Target Host: $VMName"
         Write-Host "----------------------------------------------------"
