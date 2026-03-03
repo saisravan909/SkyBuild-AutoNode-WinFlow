@@ -7,11 +7,13 @@
 *An Innovation by **Sai Sravan Cherukuri***
 
 ---
-
+![GitHub stars](https://img.shields.io/github/stars/saisravan909/SkyBuild-AutoNode-WinFlow?style=social)
+![GitHub forks](https://img.shields.io/github/forks/saisravan909/SkyBuild-AutoNode-WinFlow?style=social)
+![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen)
+![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
 ![License](https://img.shields.io/github/license/saisravan909/SkyBuild-AutoNode-WinFlow?color=blue)
 ![Atlassian](https://img.shields.io/badge/Atlassian-Champion%20Innovation-0052CC?logo=atlassian)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20Server-0078D4?logo=microsoft-windows)
-
 ##  Overview
 **SkyBuild** is an open-source framework designed to transform **Jira Service Management (JSM)** into a high-velocity provisioning engine. By treating Jira as the control plane, IT teams can automate the end-to-end lifecycle of Windows Server Virtual Machines while maintaining 100% visibility through **Jira Assets**.
 
