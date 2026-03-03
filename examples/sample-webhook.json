@@ -1,0 +1,9 @@
+{
+  "issue_key": "SB-101",
+  "hostname": "SKY-PROD-SQL01",
+  "cpu": "4",
+  "ram": "16",
+  "os_version": "Windows Server 2022",
+  "requester": "Admin User",
+  "environment": "Production"
+}
