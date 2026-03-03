@@ -45,10 +45,10 @@ This "brain" triggers the WinFlow engine when a request is approved.
 ---
 ## Step 3: Verify the Connection (Sandbox Test)
 
-Before connecting your live Jira Cloud/Data Center instance, verify that your orchestration server can process SkyBuild payloads locally.
+Before connecting your live Jira Cloud instance, verify that your server can process payloads locally.
 
-1. Open PowerShell in the root of the `SkyBuild-AutoNode-WinFlow` directory.
-2. Run the following command to pipe the sample asset data into the engine:
+1. Open PowerShell in the root directory.
+2. Run the following command:
 
 ```powershell
 $SampleData = Get-Content ./examples/sample-webhook.json -Raw
