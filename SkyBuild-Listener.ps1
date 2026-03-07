@@ -1,4 +1,4 @@
-# SkyBuild-Listener.ps1 - The Bridge between Jira and your Engine
+# SkyBuild-Listener.ps1 - Improved with Error Handling
 $port = 8080
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://*:$port/")
@@ -13,20 +13,29 @@ try {
         $request = $context.Request
 
         if ($request.HttpMethod -eq "POST") {
-            # Fix: Force UTF8 encoding to prevent garbled text/gibberish
+            # Fix: Force UTF8 encoding to prevent garbled text
             $reader = New-Object System.IO.StreamReader($request.InputStream, [System.Text.Encoding]::UTF8)
             $payload = $reader.ReadToEnd()
 
             Write-Host "Signal received! Triggering Invoke-WinFlow..." -ForegroundColor Cyan
 
-            # Fix: Use closed parentheses and Trim() to pass clean JSON to the engine
-            .\scripts\Invoke-WinFlow.ps1 -JsonPayload ($payload.Trim())
+            try {
+                # Fix: Use call operator (&) and absolute/relative path properly
+                $scriptPath = Join-Path $PSScriptRoot "scripts\Invoke-WinFlow.ps1"
+                & $scriptPath -JsonPayload ($payload.Trim())
+            }
+            catch {
+                Write-Host "ERROR: Failed to execute WinFlow engine: $($_.Exception.Message)" -ForegroundColor Red
+            }
         }
 
+        # Send response back to Jira immediately to prevent timeout
         $response = $context.Response
         $response.StatusCode = 200
         $response.Close()
     }
-} finally {
+}
+finally {
     $listener.Stop()
+    Write-Host "Listener stopped." -ForegroundColor Yellow
 }
