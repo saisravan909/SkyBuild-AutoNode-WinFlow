@@ -19,7 +19,7 @@ try {
             Write-Host "Signal received! Triggering Invoke-WinFlow..." -ForegroundColor Cyan
             
             # This calls the engine in your scripts folder
-            .\scripts\Invoke-WinFlow.ps1 -JsonPayload $payload
+            .\scripts\Invoke-WinFlow.ps1 -JsonPayload ($payload | Out-String)
         }
 
         $response = $context.Response
