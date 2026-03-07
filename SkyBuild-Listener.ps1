@@ -22,30 +22,36 @@ try {
         $request = $context.Request
         
         if ($request.HttpMethod -eq "POST") {
-            # Use a StreamReader to capture the request body
-            $reader = New-Object System.IO.StreamReader($request.InputStream)
+            # Explicitly use UTF8 encoding to prevent binary/garbled text artifacts
+            $reader = New-Object System.IO.StreamReader($request.InputStream, [System.Text.Encoding]::UTF8)
             $payload = $reader.ReadToEnd()
-            $reader.Close() # Explicitly close to ensure the stream is flushed
+            
+            # Clean up the reader immediately to flush the stream
+            $reader.Close()
+            $reader.Dispose()
 
             if (-not [string]::IsNullOrWhiteSpace($payload)) {
                 Write-Host "Signal received! Triggering Invoke-WinFlow..." -ForegroundColor Cyan
                 
-                # Pass the trimmed payload to the engine to avoid encoding artifacts
-                .\scripts\Invoke-WinFlow.ps1 -JsonPayload ($payload.Trim())
+                # Sanitize the payload by trimming and ensuring it's passed as a clean string
+                $sanitizedPayload = $payload.Trim()
+                
+                # Execute the engine script from the relative scripts folder
+                .\scripts\Invoke-WinFlow.ps1 -JsonPayload $sanitizedPayload
             }
             else {
                 Write-Host "Warning: Received an empty POST request." -ForegroundColor Yellow
             }
         }
 
-        # Send a 200 OK response back to the sender
+        # Send a 200 OK response back to the sender (Jira)
         $response = $context.Response
         $response.StatusCode = 200
         $response.Close()
     }
 }
 catch {
-    Write-Error $_.Exception.Message
+    Write-Error "Listener Error: $($_.Exception.Message)"
 }
 finally {
     $listener.Stop()
