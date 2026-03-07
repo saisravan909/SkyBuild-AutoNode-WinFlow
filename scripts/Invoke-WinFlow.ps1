@@ -15,7 +15,7 @@
 .NOTES
     Author: Sai Sravan Cherukuri
     Project: SkyBuild-AutoNode-WinFlow
-    Version: 1.0.1
+    Version: 1.0.2
     License: MIT
 #>
 
@@ -26,14 +26,16 @@ param (
 
 process {
     try {
-        # 1. Pre-processing: Clean up the input string and check for content
-        $JsonPayload = $JsonPayload.Trim()
-        if ([string]::IsNullOrWhiteSpace($JsonPayload)) {
-            throw "The JSON payload is empty or null."
+        # 1. SCRUBBING: Use Regex to find the JSON object and ignore garbled text (TNBU error fix)
+        # This looks for the first '{' and the last '}' to isolate the payload.
+        if ($JsonPayload -match '\{.*\}') {
+            $JsonPayload = $matches[0]
+        }
+        else {
+            throw "No valid JSON object detected in the payload."
         }
 
-        # 2. Parse the Incoming Webhook Data
-        # Using -ErrorAction Stop ensures the catch block is triggered on "Invalid JSON primitive"
+        # 2. PARSING: Convert the sanitized string into a PowerShell object
         $Data = $JsonPayload | ConvertFrom-Json -ErrorAction Stop
         
         $VMName      = $Data.hostname
@@ -48,19 +50,19 @@ process {
         Write-Host "Target Host: $VMName"
         Write-Host "--------------------------------------------------"
 
-        # 3. Validation logic
+        # 3. VALIDATION: Ensure critical data exists
         if (-not $VMName) { throw "Hostname is missing from the Jira payload." }
 
-        # 4. Provisioning Logic (Placeholder for Hyper-V / VMware / Cloud)
+        # 4. PROVISIONING: Simulated workflow steps
         Write-Host "[1/3] Validating $OSImage against Jira Assets library..." -ForegroundColor Gray
-        Start-Sleep -Seconds 1 # Simulating processing
+        Start-Sleep -Seconds 1 
 
         Write-Host "[2/3] Allocating $CPUCount vCPUs and ${MemoryGB}GB RAM..." -ForegroundColor Gray
         Start-Sleep -Seconds 1
 
         Write-Host "[3/3] Initiating WinFlow deployment on Hypervisor..." -ForegroundColor Gray
 
-        # ACTUAL COMMAND EXAMPLE:
+        # ACTUAL COMMAND EXAMPLE (for Hyper-V):
         # New-VM -Name $VMName -MemoryStartupBytes ($MemoryGB * 1GB) -Generation 2
 
         Write-Host "--------------------------------------------------"
@@ -70,8 +72,8 @@ process {
     }
     catch {
         Write-Host "X ERROR: Failed to provision" -ForegroundColor Red
-        # This helps you see exactly what "TNBU" or other malformed text is being passed
-        Write-Host "Captured Raw Input: '$JsonPayload'" -ForegroundColor Yellow
+        # Useful for debugging if the listener sends corrupt data again
+        Write-Host "Sanitized Input: '$JsonPayload'" -ForegroundColor Yellow
         Write-Error $_.Exception.Message
     }
 }
