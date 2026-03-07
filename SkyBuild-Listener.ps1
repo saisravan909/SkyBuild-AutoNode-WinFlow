@@ -13,13 +13,13 @@ try {
         $request = $context.Request
 
         if ($request.HttpMethod -eq "POST") {
-            # Fix: Force UTF8 encoding to prevent garbled text/TNBU errors
+            # Fix: Force UTF8 encoding to prevent garbled text/gibberish
             $reader = New-Object System.IO.StreamReader($request.InputStream, [System.Text.Encoding]::UTF8)
             $payload = $reader.ReadToEnd()
 
             Write-Host "Signal received! Triggering Invoke-WinFlow..." -ForegroundColor Cyan
 
-            # Fix: Trim the payload and ensure correct syntax to pass to the engine
+            # Fix: Use closed parentheses and Trim() to pass clean JSON to the engine
             .\scripts\Invoke-WinFlow.ps1 -JsonPayload ($payload.Trim())
         }
 
