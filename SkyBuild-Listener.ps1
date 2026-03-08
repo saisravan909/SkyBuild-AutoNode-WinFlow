@@ -1,4 +1,4 @@
-# SkyBuild-Listener.ps1 - Improved with Error Handling
+# SkyBuild-Listener.ps1 - Improved with Corrected Error Handling
 $port = 8080
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://*:$port/")
@@ -35,7 +35,13 @@ try {
         $response.Close()
     }
 }
+catch {
+    Write-Host "ERROR: Critical failure in listener loop: $($_.Exception.Message)" -ForegroundColor Red
+}
 finally {
-    $listener.Stop()
-    Write-Host "Listener stopped." -ForegroundColor Yellow
+    # This only executes if the loop is broken or an unhandled error occurs
+    if ($null -ne $listener) {
+        $listener.Stop()
+        Write-Host "Listener stopped." -ForegroundColor Yellow
+    }
 }
