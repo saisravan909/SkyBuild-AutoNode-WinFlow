@@ -20,9 +20,14 @@ try {
             Write-Host "Signal received! Triggering Invoke-WinFlow..." -ForegroundColor Cyan
 
             try {
-                # Fix: Use call operator (&) and absolute/relative path properly
-                $scriptPath = Join-Path $PSScriptRoot "scripts\Invoke-WinFlow.ps1"
-                & $scriptPath -JsonPayload ($payload.Trim())
+                # Fix: Correct pathing since we are already in the scripts folder
+$scriptPath = Join-Path $PSScriptRoot "Invoke-WinFlow.ps1"
+
+if (Test-Path $scriptPath) {
+    & $scriptPath -JsonPayload ($payload.Trim())
+} else {
+    Write-Host "ERROR: Execution script not found at $scriptPath" -ForegroundColor Red
+}
             }
             catch {
                 Write-Host "ERROR: Failed to execute WinFlow engine: $($_.Exception.Message)" -ForegroundColor Red
